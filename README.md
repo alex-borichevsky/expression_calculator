@@ -6,7 +6,7 @@ Expression consists of single digits (like '2', '7' etc), `'+'`, `'-'` and `' '`
 
 ```func Evaluate(input string)(int, error)```
 
-which takes ```string``` and returns ```(int, error)```
+ which takes ```string``` and returns ```(int, error)```
 ## Installation:
 
 ```go get -u github.com/borichevskiy/expression_calculator```
