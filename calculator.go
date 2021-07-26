@@ -4,16 +4,23 @@ import (
 	"fmt"
 )
 
-var digits = map[rune]int{'1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}
-
 type token rune
 
 func isFunc(token token) bool {
 	return (token == operatorPlus() || token == operatorMinus())
 }
-func isDigit(token token) bool {
-	_, ok := digits[rune(token)]
-	return ok
+func digit(t token) (int, bool){
+	if t == '0' {return 0, true}
+	if t == '1' {return 1, true}
+	if t == '2' {return 2, true}
+	if t == '3' {return 3, true}
+	if t == '4' {return 4, true}
+	if t == '5' {return 5, true}
+	if t == '6' {return 6, true}
+	if t == '7' {return 7, true}
+	if t == '8' {return 8, true}
+	if t == '9' {return 9, true}
+	return ' ',false
 }
 func operatorPlus() token {
 	return '+'
@@ -77,13 +84,13 @@ func (expression *Expression) process(n nextTokener) (int, error) {
 	}
 	return expression.result, nil
 }
-
 func (expression *Expression) apply(t token) (int, error) {
 	if isFunc(t) {
 		expression.operator = t
 	}
-	if isDigit(t) {
-		expression.value = digits[rune(t)]
+	val, ok := digit(t)
+	if ok{
+		expression.value = val
 		expression.result = expression.calculate()
 	}
 	return expression.result, nil
