@@ -1,4 +1,5 @@
-package expression_calculator
+package calculator
+
 import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
@@ -30,27 +31,31 @@ func TestCalculate(t *testing.T) {
 	for _, testcase := range testTable {
 		result, err := Evaluate(testcase.str)
 		t.Logf("сalling str : %s, error : %v, result : %d\n", testcase.str, err, result)
-		//Assert
+		// Assert
 		assert.Equal(t, testcase.expectedError, err,
 			fmt.Sprintf("incorrect error : expected : %v, got : %v", testcase.expectedError, err))
 		assert.Equal(t, testcase.expected, result,
 			fmt.Sprintf("incorrect result. Expected %d. Got %d", testcase.expected, result))
+	}
+}
 
-	}
-}
-func benchExpr(expr string, b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		Evaluate(expr)
-	}
-}
 func BenchmarkExpression_Evaluate3(b *testing.B) {
-	benchExpr("1+1", b)
+	var input = "1+1"
+	for i := 0; i < b.N; i++ {
+		Evaluate(input)
+	}
 }
 func BenchmarkExpression_Evaluate10(b *testing.B) {
-	benchExpr(" 2+  1 - 2", b)
+	var input = " 2+  1 - 2"
+	for i := 0; i < b.N; i++ {
+		Evaluate(input)
+	}
 }
 func BenchmarkExpression_Evaluate30(b *testing.B) {
-	benchExpr("7+1 +  6  - 7 - 1 +3 + 1 + 1+2", b)
+	var input = "7+1 +  6  - 7 - 1 +3 + 1 + 1+2"
+	for i := 0; i < b.N; i++ {
+		Evaluate(input)
+	}
 }
 
 func ExampleMain() {
@@ -64,6 +69,6 @@ func ExampleMain() {
 	}
 	// Output:
 	// 2 <nil>
-	//1 <nil>
+	// 1 <nil>
 	// 0 unexpected token at pos: 1
 }
